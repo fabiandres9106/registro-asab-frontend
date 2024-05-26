@@ -1,0 +1,47 @@
+/* Estilos personalizados para SurveyJS */
+.sv_main {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+.sv_container .sv_header {
+    background-color: #007bff;
+    color: white;
+    padding: 20px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.sv_container .sv_body .sv_row {
+    margin-bottom: 15px;
+}
+
+.sv_container .sv_progress-bar {
+    background-color: #007bff;
+}
+
+.sv_container .sv_row .sv_qstn .sv_qstn_header {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.sv_container .sv_row .sv_qstn .sv_qstn_comment {
+    margin-top: 5px;
+}
+
+.sv_container .sv_row input[type="text"],
+.sv_container .sv_row select,
+.sv_container .sv_row textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.sv_container .sv_row .sv_q_checkbox_label {
+    margin-left: 10px;
+}
+
+.sv_container .sv_row .sv_q_radiogroup_label {
+    margin-left: 10px;
+}

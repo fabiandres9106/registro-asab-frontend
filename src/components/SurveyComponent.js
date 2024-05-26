@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Survey, Model } from 'survey-react-ui';
-import 'survey-core/modern.min.css';
+import 'survey-core/defaultV2.min.css';
+import '../css/SurveyComponent.css'
+import { PlainLight } from "survey-core/themes/plain-light";
+
 import showdown from 'showdown';
+
+import "survey-core/i18n/spanish";
+
+
 
 // Configurar Showdown
 const converter = new showdown.Converter();
@@ -35,7 +42,8 @@ const SurveyComponent = () => {
           },
           {
             type: "checkbox",
-            name: "aceptacion_politica",
+            name: "politica_datos",
+            title: "Aceptación de política de datos",
             titleLocation: "hidden", // Ocultar el título
             isRequired: true,
             choices: [
@@ -48,6 +56,7 @@ const SurveyComponent = () => {
           {
             type: "checkbox",
             name: "comprension_datos",
+            title: "Comprensión de datos",
             titleLocation: "hidden", // Ocultar el título
             isRequired: true,
             choices: [
@@ -79,6 +88,7 @@ const SurveyComponent = () => {
             type: "dropdown",
             name: "function_date",
             title: "Selecciona la fecha de la función:",
+            isRequired: true,
             choices: functions.map(func => ({
               value: func.date,
               text: `Función del ${func.date} - Tickets disponibles: ${func.available_tickets}`
@@ -93,20 +103,20 @@ const SurveyComponent = () => {
             type: "dropdown",
             name: "edad",
             title: "Rango de edad:",
-            choices: ["<18", "18-24", "25-34", "35-44", "45-54", "55-64", "65+"]
+            choices: ["Menos de 18", "18 a 24", "25 a 34", "35 a 44", "45 a 54", "55 a 64", "65 o más"]
           },
           {
             type: "dropdown",
             name: "genero",
             title: "Género:",
-            choices: ["Masculino", "Femenino", "No binario", "Prefiero no decir"]
+            choices: ["Femenino", "Masculino", "No binario", "Otro", "Prefiero no decir"]
           },
           {
             type: "dropdown",
             name: "localidad",
-            title: "Localidad de residencia en Bogotá:",
+            title: "Localidad de residencia",
             choices: [
-              "Antonio Nariño", "Barrios Unidos", "Bosa", "Chapinero", "Ciudad Bolívar",
+              "Fuera de Bogotá", "Antonio Nariño", "Barrios Unidos", "Bosa", "Chapinero", "Ciudad Bolívar",
               "Engativá", "Fontibón", "Kennedy", "La Candelaria", "Los Mártires",
               "Puente Aranda", "Rafael Uribe Uribe", "San Cristóbal", "Santa Fe",
               "Suba", "Sumapaz", "Teusaquillo", "Tunjuelito", "Usaquén", "Usme"
@@ -114,21 +124,30 @@ const SurveyComponent = () => {
           },
           {
             type: "dropdown",
+            name: "municipio_aledano",
+            title: "Municipio aledaño a Bogotá:",
+            visibleIf: "{localidad} = 'Fuera de Bogotá'",
+            choices: [
+              "Otra ciudad", "Bojacá", "Cajicá", "Chía", "Cogua", "Cota", "El Rosal", "Facatativá", "Funza", "Gachancipá", "La Calera", "Madrid", "Mosquera", "Nemocón", "Soacha", "Sibaté", "Sopó", "Tabio", "Tenjo", "Tocancipá", "Zipacón", "Zipaquirá"
+            ]
+          },
+          {
+            type: "dropdown",
             name: "nivel_educativo",
             title: "Nivel educativo:",
-            choices: ["Primaria", "Secundaria", "Técnico", "Tecnológico", "Profesional", "Posgrado"]
+            choices: ["Primaria", "Bachillerato", "Técnico o Tecnólogo", "Pregrado universitario", "Especialización", "Maestría", "Doctorado"]
           },
           {
             type: "dropdown",
             name: "perfil_ocupacional",
             title: "Perfil Ocupacional:",
-            choices: ["Estudiante", "Empleado", "Independiente", "Desempleado", "Jubilado"]
+            choices: ["Artes", "Educación (Docencia)", "Ciencias sociales", "Ciencias Biológicas y de la Salud", "Administración o Finanzas", "Derecho", "Tecnología, comunicación y medios", "Ingenierías, Informática, Ciencias matemáticas y Físicas", "Otro"]
           },
           {
             type: "dropdown",
             name: "vinculacion_teatral",
-            title: "Vinculación al ámbito teatral:",
-            choices: ["Ninguna", "Aficionado", "Estudiante de teatro", "Profesional del teatro"]
+            title: "¿Tienes o tuviste alguna ocupación vinculada al ámbito teatral (actuación, dirección, diseño, etc.)?",
+            choices: ["Si", "No"]
           }
         ]
       },
@@ -138,27 +157,31 @@ const SurveyComponent = () => {
           {
             type: "ranking",
             name: "motivations",
-            title: "Clasifica las siguientes motivaciones para asistir al espectáculo según tu preferencia:",
+            title: "Motivación para asistir a la función",
             choices: [
-              "Cercanía a la función",
+              "Cercanía al lugar de la función",
               "Gratuidad del evento",
               "Programación de la Temporada de Estrenos",
               "Por los artistas (actores, actrices, director o directora)",
-              "Porque le gusta asistir a funciones teatrales",
-              "Otras motivaciones (especificar)"
+              "Porque le gusta asistir a funciones teatrales"
             ]
+          },
+          {
+            type: "text",
+            name: "otras_motivaciones",
+            title: "Otras motivaciones",
           },
           {
             type: "dropdown",
             name: "medio_informacion",
-            title: "Medio principal a través del cuál se informó para asistir a la obra:",
-            choices: ["Redes sociales", "Correo electrónico", "Página web", "Recomendación", "Otro"]
+            title: "Medio principal a través del cuál te informaste para asistir a la obra:",
+            choices: ["Voz a voz", "Instagram", "Facebook", "Prensa", "Sitio web", "Radio"]
           },
           {
             type: "checkbox",
             name: "otros_eventos",
-            title: "Otro tipo de eventos culturales al cual le gusta asistir:",
-            choices: ["Conciertos", "Exposiciones", "Cine", "Danza", "Festivales", "Conferencias"]
+            title: "¿A que otro tipo de eventos culturales te gusta asistir?:",
+            choices: ["Espectáculos de Danza y Festivales", "Música / Conciertos / Recitales", "Artes Visuales: Exposiciones y Ferias", "Eventos Literarios", "Audiovisuales: Festivales de cine / Exposiciones Fotográficas"]
           }
         ]
       }
@@ -166,6 +189,10 @@ const SurveyComponent = () => {
   };
 
   const survey = new Model(surveyData);
+
+  survey.applyTheme(PlainLight);
+
+  survey.locale = "es";
 
   survey.onTextMarkdown.add(function (survey, options) {
     // Convertir el texto de Markdown a HTML
@@ -178,8 +205,6 @@ const SurveyComponent = () => {
 
   survey.onComplete.add((result) => {
     const data = result.data;
-    data.aceptacion_politica = data.aceptacion_politica.includes("true");
-    data.comprension_datos = data.comprension_datos.includes("true");
 
     fetch('http://localhost:8000/api/survey/', {
       method: 'POST',
