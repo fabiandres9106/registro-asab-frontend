@@ -127,8 +127,8 @@ const SurveyComponent = () => {
             requiredErrorText: "Por favor selecciona el día y la hora de la función",
             placeholder: "Selecciona...",
             choices: functions.map(func => ({
-              value: func.date,
-              text: `Función del ${func.date} - Tickets disponibles: ${func.available_tickets}`
+              value: func.id,
+              text: `Función del ${new Date(func.date_time).toLocaleString('es-ES', { dateStyle: 'medium', timeStyle: 'short', hour12: true })} - Tickets disponibles: ${func.available_tickets}`
             }))
           }
         ]
@@ -252,6 +252,7 @@ const SurveyComponent = () => {
             type: "checkbox",
             name: "otros_eventos",
             title: "¿A que otro tipo de eventos culturales te gusta asistir?:",
+            description: "Puedes seleccionar más de una opción",
             choices: ["Espectáculos de Danza y Festivales", "Música / Conciertos / Recitales", "Artes Visuales: Exposiciones y Ferias", "Eventos Literarios", "Audiovisuales: Festivales de cine / Exposiciones Fotográficas"]
           }
         ]
