@@ -20,7 +20,7 @@ const SurveyComponent = () => {
   const [functions, setFunctions] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/functions/')
+    fetch('https://api.cajanegrateatro.com.co:8443/api/functions/')
       .then(response => response.json())
       .then(data => setFunctions(data));
   }, []);
