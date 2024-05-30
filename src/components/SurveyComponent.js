@@ -26,7 +26,7 @@ const SurveyComponent = () => {
   }, []);
 
   const surveyData = {
-    title: "<span class='title1'>Registro de asistencia</span><br><span class='title2'>Temporada de Estrenos ASAB</span>​",
+    title: "<span class='title1'>Registro de asistencia</span><br><span class='title2'>Yo, Hedda Gabler</span><br><span class='title3'>Temporada de Estrenos ASAB</span>​",
     showProgressBar: "top",
     pageNextText: "Siguiente",
     pagePrevText: "Anterior",
@@ -141,7 +141,7 @@ const SurveyComponent = () => {
             name: "informative_message",
             html: `
               <h4>Datos Demográficos</h4>
-              <p>Todos estos datos son opcionales. Sin embargo, agradecemos tus respuestas para poder hacer un perfil más específico de los asistentes a las funciones en la Temporada de Estrenos ASAB.</p>
+              <p>Agradecemos tus respuestas para poder hacer un perfil más específico de los asistentes a las funciones en la Temporada de Estrenos ASAB.</p>
             `
           },
           {
@@ -150,6 +150,7 @@ const SurveyComponent = () => {
             title: "Rango de edad:",
             choices: ["Menos de 18", "18 a 24", "25 a 34", "35 a 44", "45 a 54", "55 a 64", "65 o más"],
             placeholder: "Selecciona tu rango de edad",
+            isRequired: true,
           },
           {
             type: "dropdown",
@@ -157,6 +158,7 @@ const SurveyComponent = () => {
             title: "Género:",
             choices: ["Femenino", "Masculino", "No binario", "Otro", "Prefiero no decir"],
             placeholder: "Por favor selecciona una respuesta",
+            isRequired: true,
           },
           {
             type: "dropdown",
@@ -169,7 +171,8 @@ const SurveyComponent = () => {
               "Suba", "Sumapaz", "Teusaquillo", "Tunjuelito", "Usaquén", "Usme"
             ],
             description: 'Si no resides en Bogotá, por favor selecciona "Fuera de Bogotá"',
-            placeholder: "Selecciona..."
+            placeholder: "Selecciona...",
+            isRequired: true,
           },
           {
             type: "dropdown",
@@ -181,13 +184,15 @@ const SurveyComponent = () => {
             ],
             description: 'Si no vienes de un municipio cercano a Bogotá, por favor selecciona "Otra ciudad".',
             placeholder: 'Selecciona',
+            isRequired: true,
           },
           {
             type: "dropdown",
             name: "nivel_educativo",
             title: "Nivel educativo:",
             choices: ["Primaria", "Bachillerato", "Técnico o Tecnólogo", "Pregrado universitario", "Especialización", "Maestría", "Doctorado"],
-            placeholder: 'Por favor selecciona tu nivel educativo.'
+            placeholder: 'Por favor selecciona tu nivel educativo.',
+            isRequired: true,
           },
           {
             type: "dropdown",
@@ -195,6 +200,7 @@ const SurveyComponent = () => {
             title: "Perfil Ocupacional:",
             choices: ["Artes", "Educación (Docencia)", "Ciencias sociales", "Ciencias Biológicas y de la Salud", "Administración o Finanzas", "Derecho", "Tecnología, comunicación y medios", "Ingenierías, Informática, Ciencias matemáticas y Físicas", "Otro"],
             placeholder: 'Por favor selecciona tu perfil ocupacional',
+            isRequired: true,
           },
           {
             type: "dropdown",
@@ -202,6 +208,7 @@ const SurveyComponent = () => {
             title: "¿Tienes o tuviste alguna ocupación vinculada al ámbito teatral (actuación, dirección, diseño, etc.)?",
             choices: ["Si", "No"],
             placeholder: 'Por favor selecciona una respuesta',
+            isRequired: true,
           }
         ]
       },
@@ -213,7 +220,7 @@ const SurveyComponent = () => {
             name: "informative_message",
             html: `
               <h4>Motivación para asistir a la función</h4>
-              <p>Cuéntanos los motivos por los cuales estás interesado en asistir a la función. Por favor, organízalos de mayor a menor importancia de 1 a 5</p>
+              <p>Cuéntanos los motivos por los cuales estás interesado en asistir a la función. Por favor, organízalos de mayor a menor importancia de 1 a 5</p><p>Para organizar las motivaciones, debes dar clic sostenido en el item que quieras mover y luego ubicarlo en el orden que quieras.</p>
             `
           },
           {
@@ -221,12 +228,13 @@ const SurveyComponent = () => {
             name: "motivations",
             title: "Motivación para asistir a la función",
             titleLocation: "hidden",
+            isRequired: true,
             choices: [
               "Cercanía al lugar de la función",
               "Gratuidad del evento",
               "Programación de la Temporada de Estrenos",
               "Por los artistas (actores, actrices, director o directora)",
-              "Porque le gusta asistir a funciones teatrales"
+              "Porque te gusta asistir a funciones teatrales"
             ]
           },
           {
@@ -246,14 +254,16 @@ const SurveyComponent = () => {
             type: "dropdown",
             name: "medio_informacion",
             title: "Medio principal a través del cuál te informaste para asistir a la obra:",
-            choices: ["Voz a voz", "Instagram", "Facebook", "Prensa", "Sitio web", "Radio"]
+            choices: ["Voz a voz", "Instagram", "Facebook", "Prensa", "Sitio web", "Radio"],
+            isRequired: true,
           },
           {
             type: "checkbox",
             name: "otros_eventos",
             title: "¿A que otro tipo de eventos culturales te gusta asistir?:",
             description: "Puedes seleccionar más de una opción",
-            choices: ["Espectáculos de Danza y Festivales", "Música / Conciertos / Recitales", "Artes Visuales: Exposiciones y Ferias", "Eventos Literarios", "Audiovisuales: Festivales de cine / Exposiciones Fotográficas"]
+            choices: ["Espectáculos de Danza y Festivales", "Música / Conciertos / Recitales", "Artes Visuales: Exposiciones y Ferias", "Eventos Literarios", "Audiovisuales: Festivales de cine / Exposiciones Fotográficas"],
+            isRequired: true,
           }
         ]
       }
@@ -278,7 +288,7 @@ const SurveyComponent = () => {
   survey.onComplete.add((result) => {
     const data = result.data;
 
-    fetch('http://localhost:8000/api/survey/', {
+    fetch('https://api.cajanegrateatro.com.co/api/survey/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

@@ -59,12 +59,25 @@
     padding-bottom: 0;
 }
 
-.title1, .title2{
+.title1, .title2, .title3{
     text-transform: uppercase;
+}
+
+.sd-header__text .sd-title {
+    line-height: 30px;
+}
+
+.title1{
+    font-size: 25px;
 }
 
 .title2{
     font-size: 25px;
+    color: #000;
+}
+
+.title3{
+    font-size: 20px;
 
 }
 
@@ -94,4 +107,23 @@
 
 .sd-completedpage h5{
     text-align: center;
+}
+
+@media only screen and (max-width: 768px) {
+    .sv-ranking-item__text{
+        font-size: 11px;
+        margin: 0 calc(1*(var(--sjs-base-unit, var(--base-unit, 8px))))
+    }
+    
+  }
+
+
+.sv-ranking-item__index.sv-ranking-item__index {
+    width: calc(4*(var(--sjs-base-unit, var(--base-unit, 8px))));
+    height: calc(4*(var(--sjs-base-unit, var(--base-unit, 8px))));
+    font-size: 14px;
+}
+
+.sv-ranking-item__icon-container {
+    width: calc(2.5*(var(--sjs-base-unit, var(--base-unit, 8px))));
 }
