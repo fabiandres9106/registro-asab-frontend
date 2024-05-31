@@ -288,7 +288,7 @@ const SurveyComponent = () => {
   survey.onComplete.add((result) => {
     const data = result.data;
 
-    fetch('https://api.cajanegrateatro.com.co/api/survey/', {
+    fetch('https://api.cajanegrateatro.com.co:8443/api/survey/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
