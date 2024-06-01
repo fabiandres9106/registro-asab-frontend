@@ -20,7 +20,7 @@ const SurveyComponent = () => {
   const [functions, setFunctions] = useState([]);
 
   useEffect(() => {
-    fetch('https://api.cajanegrateatro.com.co:8443/api/functions/')
+    fetch('http://127.0.0.1:8000/api/functions/') // Debe actualizarse por https://api.cajanegrateatro.com.co:8443/...
       .then(response => response.json())
       .then(data => setFunctions(data));
   }, []);
@@ -288,7 +288,7 @@ const SurveyComponent = () => {
   survey.onComplete.add((result) => {
     const data = result.data;
 
-    fetch('https://api.cajanegrateatro.com.co:8443/api/survey/', {
+    fetch('http://127.0.0.1:8000/api/survey/', { // Debe actualizarse por https://api.cajanegrateatro.com.co:8443/...
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
