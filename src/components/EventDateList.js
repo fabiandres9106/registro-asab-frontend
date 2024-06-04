@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
+
+import publicApiClient from "./axiosPublicConfig";
 
 const EventDateList = () => {
     const { eventId } = useParams(); 
     const [event_dates, setEventDates] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://127.0.0.1:8000/api/events/${eventId}/event_dates`) // Debe actualizarse por https://api.cajanegrateatro.com.co:8443/...
+        publicApiClient.get(`/events/${eventId}/event_dates`) // Debe actualizarse por https://api.cajanegrateatro.com.co:8443/...
             .then(response => {
                 setEventDates(response.data);
             })

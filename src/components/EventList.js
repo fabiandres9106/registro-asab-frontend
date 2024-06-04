@@ -20,7 +20,7 @@ const EventList = () => {
             <ul>
                 {events.map(event => (
                     <li key={event.id}> 
-                        <a href={`/admin/events/${event.id}/responses`}>{`Nombre evento: ${event.nombre_evento} - Lugar: ${event.teatro} - produccion: ${event.produccion} - direccion: ${event.direccion} - cantidad de fechas: ${event.event_dates_count}`}</a>
+                        <a href={`/admin/events/${event.id}/event_dates_list`}>{`Nombre evento: ${event.nombre_evento} - Lugar: ${event.teatro} - produccion: ${event.produccion} - direccion: ${event.direccion} - cantidad de fechas: ${event.event_dates_count}`}</a>
                     </li>
                 ))}
             </ul>

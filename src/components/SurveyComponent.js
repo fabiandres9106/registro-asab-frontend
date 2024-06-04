@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Survey, Model } from 'survey-react-ui';
+import publicApiClient from './axiosPublicConfig';
 import axios from 'axios';
 import 'survey-core/defaultV2.min.css';
 import '../css/SurveyComponent.css'
@@ -23,7 +24,7 @@ const SurveyComponent = () => {
   const [event_dates, setEventsDates] = useState([]);
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/events/1/event_dates') // Hace falta actualizar esta url porque aún no está recibiendo el parámetro del id del evento, sino que se está llamando al evento piloto 1 Hedda Gabbler
+    publicApiClient.get('/events/1/event_dates') // Hace falta actualizar esta url porque aún no está recibiendo el parámetro del id del evento, sino que se está llamando al evento piloto 1 Hedda Gabbler
       .then(response => setEventsDates(response.data))
       .catch(error => console.error('Error fetching functions: ', error));
   }, []);
@@ -75,12 +76,11 @@ const SurveyComponent = () => {
     })
     .then(response => {
       const personId = response.data.id;
-
+      console.log(personId);
       // Enviar datos del ticket
       return axios.post('http://127.0.0.1:8000/api/tickets/', {
         event_date: data.event_date,
         person: personId,
-        function: data.function_date
       });
     })
     .then(response => {
