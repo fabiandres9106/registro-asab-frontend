@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, Typography, Container, Button } from '@mui/material';
+
+import { Link as RouterLink } from 'react-router-dom';
+
+
 import publicApiClient from "./axiosPublicConfig";
 
 const EventDateList = () => {
@@ -18,16 +23,42 @@ const EventDateList = () => {
     }, [eventId]);
 
     return (
-        <div>
-            <h1>Fechas para el evento {eventId}</h1>
-            <ul>
-                {event_dates.map( response => (
-                    <li key={response.id}>
-                        <a href={`/admin/event_date/${response.id}`}>Fecha del evento: {new Date(response.date_time).toLocaleString('es-ES', {dateStyle: 'medium', timeStyle: 'short', hour12: true})} - Total Tickets: {response.available_tickets} - Tickets disponibles: {response.tickets_not_reserved}</a>
-                    </li>
-                ) )}
-            </ul>
-        </div>
+        <Container>
+            <Typography variant="h4" gutterBottom> 
+                Fechas para el evento {eventId}
+            </Typography>
+            <TableContainer>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Fecha del evento</TableCell>
+                            <TableCell>Total Tickets</TableCell>
+                            <TableCell>Tickets Disponibles</TableCell>
+                            <TableCell></TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                    {event_dates.map( response => (
+                    <TableRow key={response.id}>
+                        <TableCell>{new Date(response.date_time).toLocaleString('es-ES', {dateStyle: 'medium', timeStyle: 'short', hour12: true})}</TableCell>
+                        <TableCell>{response.available_tickets}</TableCell>
+                        <TableCell>{response.tickets_not_reserved}</TableCell>
+                        <TableCell>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                component={RouterLink}
+                                to={`/admin/events/${response.id}/ticket_list`}
+                            >
+                                Ver Tickets
+                            </Button>
+                        </TableCell>
+                    </TableRow>
+                    ) )}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </Container>
     );
 }
 

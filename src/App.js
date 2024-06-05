@@ -11,6 +11,9 @@ import Unauthorized from './components/Unauthorized';
 import PrivateRoute from './components/PrivateRoute';
 import { AuthProvider } from './context/AuthContext';
 
+import AdminLayout from './components/AdminLayout';
+import Content from './components/Content'
+
 function App() {
   return (
     <AuthProvider>
@@ -21,11 +24,15 @@ function App() {
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/events" element={<EventList />} />  {/* Ruta no protegida */}
           <Route path="/admin" element={<PrivateRoute roles={['admin', 'produccion', 'logistica']} />}>
-            <Route path="events" element={<EventList />} />
-            <Route path="events/:eventId/event_dates_list" element={<EventDateList />} />
-            <Route path="events/:eventDateId/ticket_list" element={<TicketList />} />
-            <Route path="events/:eventDateId/ticket/:ticketDetailId" element={<TicketDetail />} />
-            <Route path="person/:personId" element={<PersonDetail />} />
+            <Route path="" element={<AdminLayout />}>
+              <Route path="" element={<Content />}>
+                <Route path="events" element={<EventList />} />
+                <Route path="events/:eventId/event_dates_list" element={<EventDateList />} />
+                <Route path="events/:eventDateId/ticket_list" element={<TicketList />} />
+                <Route path="events/:eventDateId/ticket/:ticketDetailId" element={<TicketDetail />} />
+                <Route path="person/:personId" element={<PersonDetail />} />
+              </Route>
+            </Route>
           </Route>
         </Routes>
       </Router>

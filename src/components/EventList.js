@@ -1,31 +1,82 @@
-import React, {useState, useEffect} from "react";
+// src/components/EventList.js
+import React, { useState, useEffect } from "react";
 import axios from 'axios';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, Typography, Container, Button } from '@mui/material';
+
+import { Link as RouterLink } from 'react-router-dom';
 
 const EventList = () => {
     const [events, setEvents] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/api/events/') // Debe actualizarse por https://api.cajanegrateatro.com.co:8443/api/functions/
+        axios.get('http://127.0.0.1:8000/api/events/')
             .then(response => {
                 setEvents(response.data);
             })
             .catch(error => {
-                console.error('Error fetching Events: ', error)
+                console.error('Error fetching Events: ', error);
             });
     }, []);
 
-    return (
-        <div>
-            <h1>Funciones</h1>
-            <ul>
-                {events.map(event => (
-                    <li key={event.id}> 
-                        <a href={`/admin/events/${event.id}/event_dates_list`}>{`Nombre evento: ${event.nombre_evento} - Lugar: ${event.teatro} - produccion: ${event.produccion} - direccion: ${event.direccion} - cantidad de fechas: ${event.event_dates_count}`}</a>
-                    </li>
-                ))}
-            </ul>
-        </div>
+    const handleSearchChange = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const filteredEvents = events.filter(event =>
+        event.nombre_evento && event.nombre_evento.toLowerCase().includes(searchTerm.toLowerCase())
     );
-}
+
+    return (
+        <Container>
+            <Typography variant="h4" gutterBottom>
+                Eventos
+            </Typography>
+            <TextField
+                label="Buscar eventos"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                value={searchTerm}
+                onChange={handleSearchChange}
+            />
+            <TableContainer>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Nombre del evento</TableCell>
+                            <TableCell>Teatro</TableCell>
+                            <TableCell>Producción</TableCell>
+                            <TableCell>Dirección</TableCell>
+                            <TableCell>Cantidad de Funciones</TableCell>
+                            <TableCell></TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {filteredEvents.map(event => (
+                            <TableRow key={event.id}>
+                                <TableCell>{event.nombre_evento}</TableCell>
+                                <TableCell>{event.teatro}</TableCell>
+                                <TableCell>{event.produccion}</TableCell>
+                                <TableCell>{event.direccion}</TableCell>
+                                <TableCell>{event.event_dates_count}</TableCell>
+                                <TableCell>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        component={RouterLink}
+                                        to={`/admin/events/${event.id}/event_dates_list`}
+                                    >
+                                        Ver evento
+                                    </Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </Container>
+    );
+};
 
 export default EventList;
