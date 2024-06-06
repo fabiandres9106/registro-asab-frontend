@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
+import publicApiClient from "./axiosPublicConfig";
+
 const SurveyResponseDetail = () => {
     const { responseId } = useParams();
     const [response, setResponse] = useState(null);
 
     useEffect(() => {
-        axios.get(`http://127.0.0.1:8000/api/responses/${responseId}`) // Debe actualizarse por https://api.cajanegrateatro.com.co:8443/...
+        publicApiClient.get(`/api/responses/${responseId}`) // Debe actualizarse por https://api.cajanegrateatro.com.co:8443/...
             .then(response => {
                 setResponse(response.data);
             })

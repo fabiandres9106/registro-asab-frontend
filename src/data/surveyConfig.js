@@ -8,10 +8,10 @@ export const surveyData = {
   goNextPageAutomatic: true,
   allowCompleteSurveyAutomatic: true,
   completedHtml: `
-    <h5>¡Gracias por registrarte!</h5>
-    <p>Este trabajo se realiza en el marco del proyecto de investigación <strong>Análisis de la escénificación</strong> en el área de <strong>Públicos</strong> del <strong>Grupo de Investigación Dramaturgias del Cuerpo y Escrituras del Espacio</strong>. Estamos interesados en conocer a los públicos que asisten a las funciones teatrales en la Temporada de Estrenos de la Facultad de Artes ASAB. Si deseas conocer más detalles sobre este proceso, haz clic <a href="#">aquí</a>.</p>
+    <div style='padding:3rem'><h5>¡Gracias por registrarte!</h5>
+    <p>Este trabajo se realiza en el marco del proyecto de investigación <strong>Análisis de la escénificación</strong> en el área de <strong>Públicos</strong> del <strong>Grupo de Investigación Dramaturgias del Cuerpo y Escrituras del Espacio y el Grupo de Investigación Áulide</strong>. Estamos interesados en conocer a los públicos que asisten a las funciones teatrales en la Temporada de Estrenos de la Facultad de Artes ASAB. Si deseas conocer más detalles sobre este proceso, haz clic <a href="#">aquí</a>.</p>
     <p><strong>Al finalizar la función se te enviará una encuesta vía correo electrónico en la cual quisieramos saber tus percepciones sobre la obra, la sala de teatro y la logística de ingreso.</strong></p>
-    <p>Por último, te aseguramos que tus datos serán almacenados de forma confidencial y utilizados únicamente con fines académicos e investigativos. Si necesitas más información, por favor consulta nuestros <a href="#">Política de Tratamiento de Datos</a>.</p>
+    <p>Por último, te aseguramos que tus datos serán almacenados de forma confidencial y utilizados únicamente con fines académicos e investigativos. Si necesitas más información, por favor consulta nuestros <a href="#">Política de Tratamiento de Datos</a>.</p></div>
   `,
   showQuestionNumbers: "off",
   pages: [

@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
+import publicApiClient from "./axiosPublicConfig";
+
 const TicketDetail = () => {
     const { ticketDetailId } = useParams();
     const [ ticketDetail, setTicketDetail] = useState(null);
 
     useEffect(() => {
-        axios.get(`http://127.0.0.1:8000/api/events/1/tickets/${ticketDetailId}`) // Debe actualizarse por https://api.cajanegrateatro.com.co:8443/...
+        publicApiClient.get(`/events/1/tickets/${ticketDetailId}`) // Debe actualizarse por https://api.cajanegrateatro.com.co:8443/...
             .then(response => {
                 setTicketDetail(response.data);
             })

@@ -2,6 +2,8 @@ import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 
+import publicApiClient from "../components/axiosPublicConfig";
+
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
@@ -27,7 +29,7 @@ const AuthProvider = ({ children }) => {
 
     const loginUser = async (username, password) => {
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/token/', { username, password });
+            const response = await publicApiClient.post('/token/', { username, password });
             const data = response.data;
             console.log('Received tokens:', data);
             setAuthTokens(data);

@@ -42,7 +42,7 @@ const EventDateList = () => {
                 console.error('Error fetching responses: ', error);
             });
 
-            axios.get(`http://127.0.0.1:8000/api/events/${eventId}`)
+            publicApiClient.get(`/events/${eventId}`)
             .then(response => {
                 setEventInfo(response.data);
                 console.log(response.data)

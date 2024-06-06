@@ -5,12 +5,14 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 
 import { Link as RouterLink } from 'react-router-dom';
 
+import publicApiClient from "./axiosPublicConfig";
+
 const EventList = () => {
     const [events, setEvents] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/api/events/')
+        publicApiClient.get('/events/')
             .then(response => {
                 setEvents(response.data);
             })

@@ -14,6 +14,8 @@ import ConfirmationNumberSharpIcon from '@mui/icons-material/ConfirmationNumberS
 import LocalActivitySharpIcon from '@mui/icons-material/LocalActivitySharp';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
+import publicApiClient from "./axiosPublicConfig";
+
 const TicketList = () => {
     const { eventDateId } = useParams();
     const [ tickets, setTickets ] = useState([]);
@@ -22,7 +24,7 @@ const TicketList = () => {
 
     // Función para obtener los tickets
     const fetchTickets = () => {
-        axios.get(`http://127.0.0.1:8000/api/events/${eventDateId}/tickets`)
+        publicApiClient.get(`/events/${eventDateId}/tickets`)
         .then(response => {
             setTickets(response.data);
         }).catch(error => {
@@ -37,16 +39,8 @@ const TicketList = () => {
 
     useEffect(() => {
 
-        // Búsqueda de tickets por evento
-        //axios.get(`http://127.0.0.1:8000/api/events/${eventDateId}/tickets`)
-        //.then(response => {
-        //    setTickets(response.data);
-        //}).catch(error => {
-        //    console.error('error fetching responses: ', error)
-        //});
-
         // Búsqueda de Información del evento
-        axios.get(`http://127.0.0.1:8000/api/event_dates/${eventDateId}`)
+        publicApiClient.get(`/event_dates/${eventDateId}`)
         .then(response => {
             setEventInfo(response.data);
             console.log(response.data)
@@ -58,7 +52,7 @@ const TicketList = () => {
 
     
     const refreshEventInfo = () => {
-        axios.get(`http://127.0.0.1:8000/api/event_dates/${eventDateId}`)
+        publicApiClient.get(`/event_dates/${eventDateId}`)
             .then(response => {
                 setEventInfo(response.data);
             })
@@ -70,7 +64,7 @@ const TicketList = () => {
     // Actualización de CheckIn del usuario en BD
 
     const handleCheckIn = (ticketId) => {
-        axios.patch(`http://127.0.0.1:8000/api/ticket/${ticketId}/update`, { check_in: true })
+        publicApiClient.patch(`/ticket/${ticketId}/update`, { check_in: true })
             .then(response => {
                 setTickets(prevTickets => prevTickets.map(ticket => 
                     ticket.id === ticketId ? { ...ticket, check_in: true } : ticket
@@ -86,7 +80,7 @@ const TicketList = () => {
     // Actualización de CheckOut del usuario en BD
 
     const handleCheckOut = (ticketId) => {
-        axios.patch(`http://127.0.0.1:8000/api/ticket/${ticketId}/update`, { check_in: false })
+        publicApiClient.patch(`/ticket/${ticketId}/update`, { check_in: false })
             .then(response => {
                 setTickets(prevTickets => prevTickets.map(ticket => 
                     ticket.id === ticketId ? { ...ticket, check_in: false } : ticket

@@ -59,7 +59,7 @@ const SurveyComponent = () => {
     data.comprension_datos = data.comprension_datos.includes("true");
 
     //  Enviar datos de la persona
-    axios.post('http://127.0.0.1:8000/api/persons/', {
+    publicApiClient.post('/persons/', {
       nombre: data.nombre,
       correo: data.correo,
       edad: data.edad,
@@ -80,7 +80,7 @@ const SurveyComponent = () => {
       const personId = response.data.id;
       console.log(personId);
       // Enviar datos del ticket
-      return axios.post('http://127.0.0.1:8000/api/tickets/', {
+      return publicApiClient.post('/tickets/', {
         event_date: data.event_date,
         person: personId,
       });

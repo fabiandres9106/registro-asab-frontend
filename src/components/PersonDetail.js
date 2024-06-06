@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
+import publicApiClient from "./axiosPublicConfig";
+
 const PersonDetail = () => {
     const { personId } = useParams();
     const [ personDetail, setPersonDetail] = useState(null);
 
     useEffect(() => {
-        axios.get(`http://127.0.0.1:8000/api/person/${personId}`) // Debe actualizarse por https://api.cajanegrateatro.com.co:8443/...
+        publicApiClient.get(`/person/${personId}`) // Debe actualizarse por https://api.cajanegrateatro.com.co:8443/...
             .then(response => {
                 setPersonDetail(response.data);
             })
