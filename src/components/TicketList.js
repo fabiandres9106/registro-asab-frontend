@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, Typography, Container, Button, Box } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, Typography, Container, Button, Box, Fab } from '@mui/material';
 
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -12,6 +12,7 @@ import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import ConfirmationNumberSharpIcon from '@mui/icons-material/ConfirmationNumberSharp';
 import LocalActivitySharpIcon from '@mui/icons-material/LocalActivitySharp';
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 const TicketList = () => {
     const { eventDateId } = useParams();
@@ -19,17 +20,30 @@ const TicketList = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [ eventInfo, setEventInfo ] = useState([]);
 
-    
-
-    useEffect(() => {
-
-        // Búsqueda de tickets por evento
+    // Función para obtener los tickets
+    const fetchTickets = () => {
         axios.get(`http://127.0.0.1:8000/api/events/${eventDateId}/tickets`)
         .then(response => {
             setTickets(response.data);
         }).catch(error => {
             console.error('error fetching responses: ', error)
         });
+        refreshEventInfo();
+    };
+
+    useEffect(() => {
+        fetchTickets();
+    }, [eventDateId])
+
+    useEffect(() => {
+
+        // Búsqueda de tickets por evento
+        //axios.get(`http://127.0.0.1:8000/api/events/${eventDateId}/tickets`)
+        //.then(response => {
+        //    setTickets(response.data);
+        //}).catch(error => {
+        //    console.error('error fetching responses: ', error)
+        //});
 
         // Búsqueda de Información del evento
         axios.get(`http://127.0.0.1:8000/api/event_dates/${eventDateId}`)
@@ -40,6 +54,7 @@ const TicketList = () => {
             console.error('error fetching eventInfo: ', error)
         });
     }, [eventDateId]);
+
 
     
     const refreshEventInfo = () => {
@@ -96,7 +111,7 @@ const TicketList = () => {
     );
 
     return (
-        <Container  sx={{ m: 0, p: 0, width:"100%" }}>
+        <Container  sx={{ m: 0, p: 0, width:"100%"}}>
             <Box
                 sx={{
                 display: 'block',
@@ -105,7 +120,7 @@ const TicketList = () => {
                 }}
             >
                 <Typography variant="h3" gutterBottom sx={{ my:'10px' }}>
-                    Tickets - Hedda Gabler
+                    Tickets - Yo, Hedda Gabler
                 </Typography>
                 <Box
                     sx={{
@@ -163,17 +178,17 @@ const TicketList = () => {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell  sx={{ width: '20%' }}>TICKET</TableCell>
-                                <TableCell sx={{ width: '50%' }}>NOMBRE</TableCell>
-                                <TableCell sx={{ width: '30%' }}>CHECK-IN</TableCell>
+                                <TableCell  sx={{ width: '20%', p:'10px' }}>TICKET</TableCell>
+                                <TableCell sx={{ width: '55%', p:'10px' }}>NOMBRE</TableCell>
+                                <TableCell sx={{ width: '25%', p:'10px', textAlign: 'right', fontSize:'0.7rem' }}>CHECK-IN</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {filteredTickets.map(ticket => (
                                 <TableRow key={ticket.id}>
                                     <TableCell sx={{ width: '20%', p: '10px' }}>{ticket.ticket_number}</TableCell>
-                                    <TableCell sx={{ width: '50%', p: '10px'  }}>{ticket.person.nombre}</TableCell>
-                                    <TableCell sx={{ width: '30%', p: '10px' }}>
+                                    <TableCell sx={{ width: '55%', p: '10px'  }}>{ticket.person.nombre}</TableCell>
+                                    <TableCell sx={{ width: '25%', p: '10px', textAlign: 'right' }}>
                                     {ticket.check_in && (
                                         <Button
                                             variant="contained"
@@ -183,9 +198,6 @@ const TicketList = () => {
                                                 width: '48px',
                                                 height: '48px',
                                                 padding: 0,
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center'
                                             }}
                                             onClick={() => handleCheckOut(ticket.id)}
                                         >
@@ -201,9 +213,6 @@ const TicketList = () => {
                                             width: '48px',
                                             height: '48px',
                                             padding: 0,
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center'
                                         }}
                                         onClick={() => handleCheckIn(ticket.id)}
                                     >
@@ -216,10 +225,17 @@ const TicketList = () => {
                         </TableBody>
                     </Table>
                 </TableContainer>
+                <Fab 
+                    color="primary" 
+                    aria-label="refresh" 
+                    sx={{ position: 'fixed', bottom: 16, right: 16 }} 
+                    onClick={fetchTickets}
+                >
+                    <RefreshIcon />
+                </Fab>
             </Box>
         </Container>
     );
-
 }
 
 export default TicketList;

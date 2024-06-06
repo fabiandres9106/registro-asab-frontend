@@ -20,6 +20,8 @@ esLocale.invalidEmail = "Por favor ingresa un email válido.";
 // Configurar Showdown
 const converter = new showdown.Converter();
 
+
+
 const SurveyComponent = () => {
   const [event_dates, setEventsDates] = useState([]);
 

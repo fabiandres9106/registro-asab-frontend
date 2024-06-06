@@ -16,13 +16,13 @@ const Sidebar = ({ open, handleDrawerToggle }) => {
       </Toolbar>
       <Divider />
       <List>
-        <ListItem button component={Link} to="/admin/events">
+        <ListItem button component={Link} to="/admin/events/1/event_dates_list">
           <ListItemIcon><Event /></ListItemIcon>
-          <ListItemText primary="Events" />
+          <ListItemText primary="Eventos" />
         </ListItem>
-        <ListItem button component={Link} to="/admin/person">
+        <ListItem button component={Link} to="#">
           <ListItemIcon><People /></ListItemIcon>
-          <ListItemText primary="Person" />
+          <ListItemText primary="Análisis de Público" />
         </ListItem>
       </List>
       <Divider />

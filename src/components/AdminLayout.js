@@ -49,7 +49,7 @@ const AdminLayout = () => {
         }}
       >
         <Toolbar />
-        <Outlet />
+        <Content />
       </Box>
     </Box>
   );
