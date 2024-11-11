@@ -22,7 +22,7 @@ function App() {
           <Route path='/' element={<SurveyComponent />} />
           <Route path="/login" element={<Login />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
-          <Route path="/admin" element={<PrivateRoute roles={['admin', 'attendant', 'producer']} />}>
+          <Route path="/admin" element={<PrivateRoute roles={["admin", "theater", "productor", "spectator", "logistic"]} />}>
             <Route path="" element={<AdminLayout />}>
               <Route path="" element={<Content />}>
                 <Route path="events" element={<EventList />} />

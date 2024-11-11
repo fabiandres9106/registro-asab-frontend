@@ -31,25 +31,44 @@ const EventDateList = () => {
     const { eventId } = useParams(); 
     const [event_dates, setEventDates] = useState([]);
     const [ eventInfo, setEventInfo ] = useState([]);
+    const [stageID, setStageID] = useState([]);
+    const [stageInfo, setStageInfo] = useState([]);
 
     useEffect(() => {
-        publicApiClient.get(`/events/${eventId}/event_dates`) // Debe actualizarse por https://api.cajanegrateatro.com.co:8443/...
+        publicApiClient.get(`/event/${eventId}/event_dates`)
             .then(response => {
                 setEventDates(response.data);
-                console.log(response.data)
+                console.log(response.data);
             })
             .catch(error => {
                 console.error('Error fetching responses: ', error);
             });
+    }, [eventId]);
 
-            publicApiClient.get(`/events/${eventId}`)
+    useEffect(() => {
+        publicApiClient.get(`/event/${eventId}`)
             .then(response => {
+                console.log('Event Info: ', response.data);
                 setEventInfo(response.data);
-                console.log(response.data)
-            }).catch(error => {
-                console.error('error fetching eventInfo: ', error)
+                setStageID(response.data.stage_id)
+            })
+            .catch(error => {
+                console.error('Error fetching eventInfo: ', error);
             });
     }, [eventId]);
+
+    useEffect(() => {
+        if (stageID) {
+            publicApiClient.get(`/stage/${stageID}`)
+                .then(response => {
+                    setStageInfo(response.data);
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.error('Error fetching stageInfo: ', error);
+                });
+        }
+    }, [stageID]);
 
     return (
         <Container sx={{ m: 0, p: 0, width:"100%"}}>
@@ -61,7 +80,7 @@ const EventDateList = () => {
                 }}
             >
                 <Typography variant="h3" gutterBottom sx={{ my:'10px' }}>
-                    Yo, Hedda Gabler
+                    {eventInfo.event_name}
                 </Typography>
                 <Box
                     sx={{
@@ -72,7 +91,7 @@ const EventDateList = () => {
                 >
                     <HomeIcon fontSize="small" sx={{ mr:'5px' }} />
                     <Typography variant="h5">
-                    Sala: {eventInfo.teatro}
+                    <b>Escenario:</b> {stageInfo.stage_name}
                     </Typography> 
                 </Box>
                 <Box
@@ -84,7 +103,7 @@ const EventDateList = () => {
                 >
                     <PsychologyIcon fontSize="small" sx={{ mr:'5px' }} />
                     <Typography variant="h5">
-                        Producción: { eventInfo.produccion }
+                        <b>Producción:</b> Facultad de Artes ASAB - Universidad Distrital Francisco José de Caldas 
                     </Typography>
                 </Box>
                 <Box
@@ -96,8 +115,9 @@ const EventDateList = () => {
                 >
                     <PersonIcon fontSize="small" sx={{ mr:'5px' }} />
                     <Typography variant="h5">
-                        Dirección: { eventInfo.direccion }
+                        <b>Equipo artístico:</b> 
                     </Typography>
+                    
                 </Box>
                 <Box
                     sx={{
@@ -106,10 +126,13 @@ const EventDateList = () => {
                         py: '5px'
                     }}
                 >
-                    <Diversity3Icon fontSize="small" sx={{ mr:'5px' }} />
-                    <Typography variant="h5">
-                        Equipo artístico: { eventInfo.equipo_artistico }
-                    </Typography>
+                    <ul>
+                        {eventInfo.artistic_team && Object.entries(eventInfo.artistic_team).map(([role, members], index) => (
+                            <li key={index}>
+                                <strong>{role}:</strong> {members}
+                            </li>
+                        ))}
+                    </ul>
                 </Box>
             </Box>
             <Box

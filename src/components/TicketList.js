@@ -20,11 +20,12 @@ const TicketList = () => {
     const { eventDateId } = useParams();
     const [ tickets, setTickets ] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
-    const [ eventInfo, setEventInfo ] = useState([]);
+    const [ eventDateInfo, setEventDateInfo ] = useState([]);
+    const [ eventInfo, setEventInfo] = useState([])
 
     // Función para obtener los tickets
     const fetchTickets = () => {
-        publicApiClient.get(`/events/${eventDateId}/tickets`)
+        publicApiClient.get(`/event_date/${eventDateId}/tickets`)
         .then(response => {
             setTickets(response.data);
         }).catch(error => {
@@ -37,32 +38,39 @@ const TicketList = () => {
         fetchTickets();
     }, [eventDateId])
 
+    // Búsqueda de Información del event_date
     useEffect(() => {
-
-        // Búsqueda de Información del evento
-        publicApiClient.get(`/event_dates/${eventDateId}`)
+        publicApiClient.get(`/event_date/${eventDateId}`)
         .then(response => {
-            setEventInfo(response.data);
+            setEventDateInfo(response.data);
             console.log(response.data)
         }).catch(error => {
-            console.error('error fetching eventInfo: ', error)
+            console.error('error fetching eventDateInfo: ', error)
         });
     }, [eventDateId]);
 
-
-    
     const refreshEventInfo = () => {
-        publicApiClient.get(`/event_dates/${eventDateId}`)
+        publicApiClient.get(`/event_date/${eventDateId}`)
             .then(response => {
-                setEventInfo(response.data);
+                setEventDateInfo(response.data);
             })
             .catch(error => {
                 console.error('Error refreshing event info: ', error);
             });
     };
 
-    // Actualización de CheckIn del usuario en BD
+    // Búsqueda de Información del Evento
+    useEffect(() => {
+        publicApiClient.get(`/event/${eventDateInfo.event_id}`)
+        .then(response => {
+            setEventInfo(response.data);
+            console.log(response.data)
+        }).catch(error => {
+            console.error('error fetching eventDateInfo: ', error)
+        });
+    }, [eventDateInfo.event_id]);
 
+    // Actualización de CheckIn del usuario en BD
     const handleCheckIn = (ticketId) => {
         publicApiClient.patch(`/ticket/${ticketId}/update`, { check_in: true })
             .then(response => {
@@ -101,7 +109,7 @@ const TicketList = () => {
     // Filtro en Búsqueda de Ticket
 
     const filteredTickets = tickets.filter(ticket =>
-        ticket.person.nombre && ticket.person.nombre.toLowerCase().includes(searchTerm.toLowerCase()) 
+        ticket.user.name && ticket.user.name.toLowerCase().includes(searchTerm.toLowerCase()) 
     );
 
     return (
@@ -114,7 +122,7 @@ const TicketList = () => {
                 }}
             >
                 <Typography variant="h3" gutterBottom sx={{ my:'10px' }}>
-                    Tickets - Yo, Hedda Gabler
+                    Tickets - {eventInfo.event_name}
                 </Typography>
                 <Box
                     sx={{
@@ -125,7 +133,7 @@ const TicketList = () => {
                 >
                     <CalendarTodayIcon fontSize="small" sx={{ mr:'5px' }} />
                     <Typography variant="h5">
-                    Fecha: {new Date(eventInfo.date_time).toLocaleString('es-ES', {dateStyle: 'medium', timeStyle: 'short', hour12: true})}
+                    Fecha: {new Date(eventDateInfo.date_time).toLocaleString('es-ES', {dateStyle: 'medium', timeStyle: 'short', hour12: true})}
                     </Typography> 
                 </Box>
                 <Box
@@ -137,7 +145,19 @@ const TicketList = () => {
                 >
                     <ConfirmationNumberSharpIcon fontSize="small" sx={{ mr:'5px' }} />
                     <Typography variant="h5">
-                        Tickets disponibles: { eventInfo.available_tickets - eventInfo.tickets_checkin }
+                        Tickets sin Check-In: { eventDateInfo.available_tickets - eventDateInfo.tickets_checkin }
+                    </Typography>
+                </Box>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'middle',
+                        my: '5px'
+                    }}
+                >
+                    <ConfirmationNumberSharpIcon fontSize="small" sx={{ mr:'5px' }} />
+                    <Typography variant="h5">
+                        Tickets Check-In: { eventDateInfo.tickets_checkin }
                     </Typography>
                 </Box>
                 <Box
@@ -149,7 +169,7 @@ const TicketList = () => {
                 >
                     <LocalActivitySharpIcon fontSize="small" sx={{ mr:'5px' }} />
                     <Typography variant="h5">
-                        Tickets reservados: { eventInfo.tickets_reserved }
+                        Tickets reservados: { eventDateInfo.tickets_reserved }
                     </Typography>
                 </Box>
             </Box>
@@ -181,7 +201,7 @@ const TicketList = () => {
                             {filteredTickets.map(ticket => (
                                 <TableRow key={ticket.id}>
                                     <TableCell sx={{ width: '20%', p: '10px' }}>{ticket.ticket_number}</TableCell>
-                                    <TableCell sx={{ width: '55%', p: '10px'  }}>{ticket.person.nombre}</TableCell>
+                                    <TableCell sx={{ width: '55%', p: '10px'  }}>{ticket.user.name}</TableCell>
                                     <TableCell sx={{ width: '25%', p: '10px', textAlign: 'right' }}>
                                     {ticket.check_in && (
                                         <Button

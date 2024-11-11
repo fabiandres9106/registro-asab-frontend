@@ -5,7 +5,7 @@ import { Container, Box, TextField, Button, Typography, Alert } from '@mui/mater
 
 const Login = () => {
     const { auth, setAuth } = useContext(AuthContext);
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
     const { loginUser } = useContext(AuthContext);
@@ -13,16 +13,16 @@ const Login = () => {
 
     useEffect(() => {
         if (auth) {
-            navigate('/admin/events/1/event_dates_list');
+            navigate('/admin');
         }
     }, [auth, navigate]);
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const success = await loginUser(username, password);
+        const success = await loginUser(email, password);
         if (success) {
-            navigate('/admin/events/1/event_dates_list');
+            navigate('/admin');
         } else {
             setError('Error en usuario o contraseña');
         }
@@ -53,13 +53,13 @@ const Login = () => {
                         margin="normal"
                         required
                         fullWidth
-                        id="username"
-                        label="Username"
-                        name="username"
-                        autoComplete="username"
+                        id="email"
+                        label="email"
+                        name="email"
+                        autoComplete="email"
                         autoFocus
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                     <TextField
                         margin="normal"

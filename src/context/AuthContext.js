@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import axios from 'axios';
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';  // Importación como named import
 
 import publicApiClient from "../components/axiosPublicConfig";
 
@@ -13,31 +12,41 @@ const AuthProvider = ({ children }) => {
         return tokens ? JSON.parse(tokens) : null;
     });
 
-    const [loading, setLoading ] = useState(true);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (authTokens) {
-            const decodedToken = jwtDecode(authTokens.access);
-            console.log('Decoded token:', decodedToken);
-            setUser({
-                username: decodedToken.username,
-                roles: decodedToken.roles || []  // Asegúrate de que roles esté definido
-            });
+            try {
+                const decodedToken = jwtDecode(authTokens.access_token);
+                //console.log('Decoded token:', decodedToken);
+                setUser({
+                    user_id: decodedToken.user_id,
+                    email: decodedToken.email,
+                    roles: decodedToken.roles || []  // Asegúrate de que roles esté definido
+                });
+                //console.log("Usuario seteado", user);
+            } catch (error) {
+                console.error("Error al decodificar el token:", error);
+                logoutUser();  // Opcional: Cierra sesión si el token es inválido
+            }
         }
-        setLoading(false)
+        setLoading(false);
     }, [authTokens]);
 
-    const loginUser = async (username, password) => {
+    const loginUser = async (email, password) => {
         try {
-            const response = await publicApiClient.post('/token/', { username, password });
+            const response = await publicApiClient.post('/auth/login', { email, password });
             const data = response.data;
-            console.log('Received tokens:', data);
-            setAuthTokens(data);
+            //console.log('Received tokens:', data);
+
+            setAuthTokens(data);  // Asegúrate de establecer el objeto completo en el estado
             localStorage.setItem('authTokens', JSON.stringify(data));
-            const decodedToken = jwtDecode(data.access);
-            console.log('Decoded token after login:', decodedToken);
+
+            const decodedToken = jwtDecode(data.access_token);  // Decodifica correctamente usando el token recibido
+            //console.log('Decoded token after login:', decodedToken);
             setUser({
-                username: decodedToken.username,
+                user_id: decodedToken.user_id,
+                email: decodedToken.email,
                 roles: decodedToken.roles || []  // Asegúrate de que roles esté definido
             });
             return true;

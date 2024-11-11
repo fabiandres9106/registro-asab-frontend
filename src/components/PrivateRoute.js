@@ -5,7 +5,7 @@ import { AuthContext } from '../context/AuthContext';
 const PrivateRoute = ({ roles }) => {
     const { user, loading } = useContext(AuthContext);
 
-    console.log('User in PrivateRoute:', user);  // Verifica los datos del usuario
+    //console.log('User in PrivateRoute:', user);  // Verifica los datos del usuario
 
     if (loading) {
       return <div>Loading...</div>;  // O cualquier componente de carga que prefieras
