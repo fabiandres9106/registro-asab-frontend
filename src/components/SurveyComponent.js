@@ -41,9 +41,10 @@ const SurveyComponent = () => {
   survey.locale = "es";
 
   // Actualizar las opciones del dropdown de funciones
-  survey.getQuestionByName('event_date').choices = event_dates.map(event => ({
+  const availableEvents = event_dates.filter(event => event.tickets_not_reserved > 0);
+  survey.getQuestionByName('event_date').choices = availableEvents.map(event => ({
     value: event.id,
-    text: `${new Date(event.date_time).toLocaleString('es-ES', {dateStyle: 'medium', timeStyle: 'short', hour12: true})} - Tickets disponibles: ${event.tickets_not_reserved}`
+    text: `${new Date(event.date_time).toLocaleString('es-ES', { dateStyle: 'medium', timeStyle: 'short', hour12: true })} - Tickets disponibles: ${event.tickets_not_reserved}`
   }));
 
   survey.onTextMarkdown.add(function (survey, options) {
