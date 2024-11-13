@@ -107,6 +107,7 @@ const SurveyComponent = () => {
         return publicApiClient.post('/ticket/', {
           event_date_id: data.event_date,
           user_id: userId,
+          ticket_name: data.nombre,
         });
       })
       .then(response => {

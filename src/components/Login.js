@@ -13,7 +13,7 @@ const Login = () => {
 
     useEffect(() => {
         if (auth) {
-            navigate('/admin');
+            navigate('/admin/events/1/event_dates_list');
         }
     }, [auth, navigate]);
 
@@ -22,7 +22,7 @@ const Login = () => {
         e.preventDefault();
         const success = await loginUser(email, password);
         if (success) {
-            navigate('/admin');
+            navigate('/admin/events/1/event_dates_list');
         } else {
             setError('Error en usuario o contraseña');
         }
