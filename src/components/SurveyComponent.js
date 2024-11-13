@@ -73,7 +73,7 @@ const SurveyComponent = () => {
           return Promise.resolve(); // Pasar a la siguiente promesa en la cadena
         } else {
           // Crear usuario
-          return publicApiClient.post('/users/', {
+          return publicApiClient.post('/users', {
             email: data.correo,
             password: data.correo,
             name: data.nombre,
@@ -89,7 +89,7 @@ const SurveyComponent = () => {
       })
       .then(() => {
         // Crear encuesta
-        return publicApiClient.post('/survey/', {
+        return publicApiClient.post('/survey', {
           user_id: userId,
           age: data.edad,
           genere: data.genero,
@@ -107,7 +107,7 @@ const SurveyComponent = () => {
         surveyId = response.data.id;
         console.log('Survey created with ID:', surveyId);
         // Crear ticket
-        return publicApiClient.post('/ticket/', {
+        return publicApiClient.post('/ticket', {
           event_date_id: data.event_date,
           user_id: userId,
           ticket_name: data.nombre,
