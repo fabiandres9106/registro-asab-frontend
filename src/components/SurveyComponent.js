@@ -4,8 +4,9 @@ import publicApiClient from './axiosPublicConfig';
 import axios from 'axios';
 import 'survey-core/defaultV2.min.css';
 import '../css/SurveyComponent.css'
-import { PlainLight } from "survey-core/themes/plain-light";
+import { DefaultDark } from "survey-core/themes/default-dark";
 import { surveyData } from "../data/surveyConfig"
+import { surveyTheme } from "../data/surveyTheme.js"
 
 import showdown from 'showdown';
 
@@ -34,7 +35,8 @@ const SurveyComponent = () => {
 
   const survey = new Model(surveyData);
 
-  survey.applyTheme(PlainLight);
+  survey.applyTheme(DefaultDark);
+  survey.applyTheme(surveyTheme)
 
   survey.locale = "es";
 

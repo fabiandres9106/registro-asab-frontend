@@ -1,7 +1,25 @@
 /* Estilos personalizados para SurveyJS */
+
+.sd-html{
+    color: #D3C7A7
+}
+
+.sd-html a{
+    color: #ff0086;
+}
+
+.sd-body .sd-body__page{
+    background: #1A0601;
+}
+
 .sv_main {
     font-family: 'Arial', sans-serif;
-    color: #333;
+    color: #D3C7A7;
+}
+
+.sd-element--with-frame, .sd-element, .sd-question, .sd-row__question, .sd-question--title-top, .sd-row__question--small{
+    background: #1A0601;
+    color: #D3C7A7
 }
 
 .sv_container .sv_header {
@@ -36,6 +54,7 @@
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    background: #1a0601;
 }
 
 .sv_container .sv_row .sv_q_checkbox_label {
@@ -88,15 +107,17 @@
 
 .sd-body.sd-body--static{
     padding-top: 0;
-    border: 1px solid #fff;
     border-radius: 10px;
-    background-color: #fff;
     padding-bottom: 30px;
     margin-bottom: 30px;
 }
 
 .sv-components-row>.sv-components-column--expandable{
-    background-color: #fff;
+    background-color: #1A0601;
+}
+
+.sv_custom_header{
+    display: none;
 }
 
 .sd-completedpage, .sd-completed-before-page{
@@ -107,6 +128,10 @@
 
 .sd-completedpage h5{
     text-align: center;
+}
+
+.sd-completedpage{
+    min-height: 100vh;
 }
 
 @media only screen and (max-width: 768px) {
@@ -126,4 +151,44 @@
 
 .sv-ranking-item__icon-container {
     width: calc(2.5*(var(--sjs-base-unit, var(--base-unit, 8px))));
+}
+
+
+div.sd-title{
+    display: none !important;
+}
+
+.sd-html > h4:nth-child(1), .sd-body > div:nth-child(1) > h5:nth-child(1){
+    color: #ff0086;
+    padding-bottom: 1rem
+}
+
+.sd-navigation__next-btn, .sd-btn{
+    background: #ff0086 !important;
+    color: #fff;
+}
+
+.sd-navigation__next-btn:hover, .sd-btn:hover{
+    background: #b60060 !important;
+    color: #fff;
+}
+
+.sd-text{
+    background: #1a0601 !important;
+    border: solid 1px #d3c7a7 !important;
+    border-radius: 5px !important;
+    padding: 5px 15px !important;
+    height: 30px !important;
+    width: 94% !important;
+    color: #d3c7a7 !important;
+}
+
+.sd-dropdown{
+    background: #d3c7a7 !important;
+    border: solid 1px #d3c7a7 !important;
+    border-radius: 5px !important;
+    padding: 5px 15px !important;
+    height: 50px !important;
+    width: 100% !important;
+    color: #d3c7a7 !important;
 }
