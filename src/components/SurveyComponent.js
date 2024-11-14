@@ -73,7 +73,7 @@ const SurveyComponent = () => {
           return Promise.resolve(); // Pasar a la siguiente promesa en la cadena
         } else {
           // Crear usuario
-          return publicApiClient.post('/users', {
+          return publicApiClient.post('/users/create', {
             email: data.correo,
             password: data.correo,
             name: data.nombre,
