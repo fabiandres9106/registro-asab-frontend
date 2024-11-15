@@ -46,16 +46,16 @@ const SurveyComponent = () => {
   //const availableEvents = event_dates.filter(event => event.tickets_not_reserved > 0);
 
   // Calcular el tiempo actual
-  const currentTime = new Date();
+const currentTime = new Date();
 
-  // Filtrar fechas disponibles según el número de tickets y el tiempo faltante
-  const availableEvents = event_dates.filter(event => {
-    const eventTime = new Date(event.date_time);
-    const timeDifference = (eventTime - currentTime) / (1000 * 60); // Diferencia en minutos
+// Filtrar fechas disponibles según el número de tickets y el tiempo faltante
+const availableEvents = event_dates.filter(event => {
+  const eventTime = new Date(event.date_time);
+  const timeDifference = (eventTime - currentTime) / (1000 * 60); // Diferencia en minutos
 
-    // Mostrar eventos con tickets o aquellos a menos de 30 minutos de iniciar
-    return event.tickets_not_reserved > 0 || timeDifference <= 30;
-  });
+  // Excluir eventos cuya fecha ya ha pasado y mostrar aquellos con tickets o a menos de 30 minutos de iniciar
+  return eventTime >= currentTime && (event.tickets_not_reserved > 0 || timeDifference <= 30);
+});
 
   survey.getQuestionByName('event_date').choices = availableEvents.map(event => ({
     value: event.id,
